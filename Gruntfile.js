@@ -9,12 +9,21 @@ module.exports = function(grunt) {
       build: {
         files: [{
           expand: true,
+          cwd: "src",
           src: [
-            "src/fonts/**/*.{woff,woff2}",
-            "src/img/**",
-            "src/js/**",
-            "src/*.html"
+            "fonts/**/*.{woff,woff2}",
+            "img/**",
+            "js/**",
+            "*.html"
           ],
+          dest: "build"
+        }]
+      },
+      html: {
+        files: [{
+          expand: true,
+          cwd: "src",
+          src: ["*.html"],
           dest: "build"
         }]
       }
@@ -113,9 +122,13 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      html: {
+        files: ["src/*.html"],
+        tasks: ["copy:html"]
+      },
       style: {
         files: ["src/less/**/*.less"],
-        tasks: ["less", "postcss"],
+        tasks: ["less", "postcss", "csso"],
         options: {
           spawn: false
         }
